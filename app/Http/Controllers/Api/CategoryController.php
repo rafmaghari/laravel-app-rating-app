@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Psy\Util\Json;
 
 class CategoryController extends Controller
 {
@@ -16,54 +15,23 @@ class CategoryController extends Controller
         return response()->json(Category::all());
     }
 
-    public function store(): JsonResponse
+    public function store(CategoryRequest $request): JsonResponse
     {
-        $category = Category::create(request()->all());
-        return response()->json($category,201);
+        $category = Category::create($request->validated());
+        return response()->json([
+            'message' => 'Category has been added',
+            'data' => $category],201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
+    public function update(CategoryRequest $request,Category $category): JsonResponse
     {
-        //
+        return response()->json([
+            'message' => 'Category has been added',
+            'data' => $category->update($request->validated())]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
+        return response()->json(['message' => 'Category has been deleted', 'data' => $category->delete()]);
     }
 }
