@@ -1,4 +1,4 @@
-<h1>Laravel Rating App for my portfolio</h1>
+<h1>Laravel Rating App</h1>
 
 <h3>PROJECT OVERVIEW</h3>
 <ul>
