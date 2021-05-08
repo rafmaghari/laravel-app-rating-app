@@ -2,9 +2,16 @@
 
 use App\Models\Item;
 use App\Models\Rating;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    Passport::actingAs($this->user);
+});
 
 it('can add rating', function () {
     $item = Item::factory()->forCategory()->forUser()->create();

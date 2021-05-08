@@ -1,9 +1,17 @@
 <?php
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    Passport::actingAs($this->user);
+});
+
 
 it('can validate category data', function () {
     $response = $this->postJson(route('categories.store', []));

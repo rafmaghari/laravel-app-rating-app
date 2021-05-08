@@ -5,8 +5,14 @@ use App\Models\User;
 use App\Models\Item;
 use App\Models\ItemComment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    Passport::actingAs($this->user);
+});
 
 it('can validate items',function () {
     $response = $this->postJson(route('items.store',[]));
@@ -34,10 +40,9 @@ it('can add item', function () {
 
 it('can edit item', function () {
     $category = Category::factory()->create();
-    $user = User::factory()->create();
-    $item = Item::factory()->for($category)->for($user)->create();
+    $item = Item::factory()->for($category)->for($this->user)->create();
 
-    $newParam = ['title' => 'UPDATED TITLE', 'content' => 'UPDATED CONTENT', 'user_id' => $user->id, 'category_id' => $category->id];
+    $newParam = ['title' => 'UPDATED TITLE', 'content' => 'UPDATED CONTENT', 'user_id' => $this->user->id, 'category_id' => $category->id];
 
     $response = $this->putJson(route('items.update',$item),$newParam);
     $response->assertStatus(200);
@@ -46,8 +51,7 @@ it('can edit item', function () {
 
 it('can delete item', function () {
     $category = Category::factory()->create();
-    $user = User::factory()->create();
-    $item = Item::factory()->for($category)->for($user)->create();
+    $item = Item::factory()->for($category)->for($this->user)->create();
 
     $response = $this->deleteJson(route('items.destroy', $item));
 
@@ -57,10 +61,9 @@ it('can delete item', function () {
 
 it('can add item comment', function() {
     $category = Category::factory()->create();
-    $user = User::factory()->create();
-    $item = Item::factory()->for($category)->for($user)->create();
+    $item = Item::factory()->for($category)->for($this->user)->create();
 
-    $itemComment = ItemComment::factory()->state( ['user_id' => $user->id, 'item_id' => $item->id] )->raw();
+    $itemComment = ItemComment::factory()->state( ['user_id' => $this->user->id, 'item_id' => $item->id] )->raw();
 
     $response = $this->postJson(route('item-comments.store', $itemComment));
     $response->assertStatus(201);
@@ -68,8 +71,7 @@ it('can add item comment', function() {
 
 it('can edit item comment', function() {
     $category = Category::factory()->create();
-    $user = User::factory()->create();
-    $item = Item::factory()->for($category)->for($user)->hasComments()->create();
+    $item = Item::factory()->for($category)->for($this->user)->hasComments()->create();
 
     $updateParam = ['content' => 'UPDATED CONTENT'];
     $response = $this->putJson(route('item-comments.update', $item->comments->first()->id), $updateParam);
@@ -80,8 +82,7 @@ it('can edit item comment', function() {
 
 it('can delete item comment', function() {
     $category = Category::factory()->create();
-    $user = User::factory()->create();
-    $item = Item::factory()->for($category)->for($user)->hasComments()->create();
+    $item = Item::factory()->for($category)->for($this->user)->hasComments()->create();
 
     $response = $this->deleteJson(route('item-comments.destroy', $item->comments->first()->id));
 
