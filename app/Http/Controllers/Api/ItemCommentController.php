@@ -11,12 +11,6 @@ use Illuminate\Http\Request;
 class ItemCommentController extends Controller
 {
 
-    public function index(): JsonResponse
-    {
-//        return response()->json(ItemCon::all());
-    }
-
-
     public function store(): JsonResponse
     {
         $itemComment = Item::find(request()->item_id)->comments()->create(request()->all());
