@@ -13,13 +13,14 @@ class ItemCommentController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json(Item::all());
+//        return response()->json(ItemCon::all());
     }
 
 
     public function store(): JsonResponse
     {
-        return response()->json(['message' => request()->all(), 'data' => Item::create(request()->all())],201);
+        $itemComment = Item::find(request()->item_id)->comments()->create(request()->all());
+        return response()->json(['message' => request()->all(), 'data' => $itemComment],201);
     }
 
     /**

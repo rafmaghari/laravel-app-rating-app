@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ItemCommentController;
 use App\Http\Controllers\Api\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('/categories', CategoryController::class);
 Route::apiResource('/items', ItemController::class);
+Route::apiResource('/item-comments', ItemCommentController::class);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
