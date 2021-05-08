@@ -23,37 +23,13 @@ class ItemCommentController extends Controller
         return response()->json(['message' => request()->all(), 'data' => $itemComment],201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ItemComment  $itemComment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ItemComment $itemComment)
+    public function update(Request $request, ItemComment $itemComment): JsonResponse
     {
-        //
+        return response()->json(['message' => 'Comment has been updated', 'data' => $itemComment->update($request->all())]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItemComment  $itemComment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ItemComment $itemComment)
+    public function destroy(ItemComment $itemComment): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ItemComment  $itemComment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ItemComment $itemComment)
-    {
-        //
+        return response()->json(['message' => 'Comment has been deleted' ,'data' => $itemComment->delete()]);
     }
 }

@@ -65,3 +65,28 @@ it('can add item comment', function() {
     $response = $this->postJson(route('item-comments.store', $itemComment));
     $response->assertStatus(201);
 });
+
+it('can edit item comment', function() {
+    $category = Category::factory()->create();
+    $user = User::factory()->create();
+    $item = Item::factory()->for($category)->for($user)->hasComments()->create();
+
+    $updateParam = ['content' => 'UPDATED CONTENT'];
+    $response = $this->putJson(route('item-comments.update', $item->comments->first()->id), $updateParam);
+
+    $response->assertStatus(200);
+    $this->assertDatabaseHas('item_comments', $updateParam);
+});
+
+it('can delete item comment', function() {
+    $category = Category::factory()->create();
+    $user = User::factory()->create();
+    $item = Item::factory()->for($category)->for($user)->hasComments()->create();
+
+    $response = $this->deleteJson(route('item-comments.destroy', $item->comments->first()->id));
+
+    $response->assertStatus(200);
+    $this->assertDatabaseCount('item_comments', 0);
+});
+
+
