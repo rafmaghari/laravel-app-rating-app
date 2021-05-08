@@ -3,30 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\ItemComment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ItemCommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(): JsonResponse
     {
-        //
+        return response()->json(Item::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(): JsonResponse
     {
-        //
+        return response()->json(['message' => request()->all(), 'data' => Item::create(request()->all())],201);
     }
 
     /**

@@ -18,16 +18,12 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): JsonResponse
     {
         $category = Category::create($request->validated());
-        return response()->json([
-            'message' => 'Category has been added',
-            'data' => $category],201);
+        return response()->json(['message' => 'Category has been added', 'data' => $category],201);
     }
 
     public function update(CategoryRequest $request,Category $category): JsonResponse
     {
-        return response()->json([
-            'message' => 'Category has been added',
-            'data' => $category->update($request->validated())]);
+        return response()->json(['message' => 'Category has been added', 'data' => $category->update($request->validated())]);
     }
 
     public function destroy(Category $category): JsonResponse
