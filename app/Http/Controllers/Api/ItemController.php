@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use Illuminate\Http\JsonResponse;
 
-class ItemController extends Controller
+class ItemController extends BaseController
 {
     public function index(): JsonResponse
     {
-        return response()->json(Item::all());
+        return $this->sendResponse(Item::all(),'Item has been fetched');
     }
 
     public function store(ItemRequest $request): JsonResponse

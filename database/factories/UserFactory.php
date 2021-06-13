@@ -19,7 +19,7 @@ class UserFactory extends Factory
             'birthdate' => now()->subYears(20),
             'gender' => 1,
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2b$10$zuz1wD9vidyqHmXSvLQeOu9fvlI3wiSAHtgoIC8ZLIRs7UoaI0Fka', // password
             'is_active' => 1,
         ];
     }

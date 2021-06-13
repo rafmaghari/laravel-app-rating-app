@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 class CreateUsersTable extends Migration
 {
     public function up(): void
@@ -17,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->unsignedTinyInteger('is_active')->default(1);
+            $table->unsignedTinyInteger('is_admin')->default(0);
             $table->timestamps();
         });
     }

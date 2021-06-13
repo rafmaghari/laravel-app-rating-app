@@ -15,11 +15,11 @@ class AuthController extends BaseController
         if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = auth()->user();
             $success['token'] =  $user->createToken('rating_app')->accessToken;
-            $success['name'] =  $user->name;
+            $success['user'] =  $user;
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Unauthorised.', ['error'=>'Email/Password is invalid.'], 400);
         }
     }
 
@@ -35,7 +35,7 @@ class AuthController extends BaseController
             'c_password' => 'required|same:password',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
