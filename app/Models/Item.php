@@ -27,4 +27,9 @@ class Item extends Model
     {
         return $this->hasMany(ItemComment::class);
     }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

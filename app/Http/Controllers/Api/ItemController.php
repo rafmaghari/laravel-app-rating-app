@@ -11,7 +11,7 @@ class ItemController extends BaseController
 {
     public function index(): JsonResponse
     {
-        return $this->sendResponse(Item::all(),'Item has been fetched');
+        return $this->sendResponse(Item::with('user', 'category','ratings')->get(),'Item has been fetched');
     }
 
     public function store(ItemRequest $request): JsonResponse
