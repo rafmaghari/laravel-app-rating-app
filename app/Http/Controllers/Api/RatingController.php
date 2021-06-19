@@ -12,7 +12,17 @@ class RatingController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        return response()->json(['message' => 'Rating has been add', 'data' => Rating::create($request->all())],201);
+        return response()->json(
+            [
+                'message' => 'Rating has been add',
+                'data' => Rating::updateOrCreate(
+                    [
+                        'item_id' => $request->item_id,
+                        'user_id' => $request->user_id
+                    ],
+                    ['rating' => $request->rating]
+                )
+            ],201);
     }
 
     public function update(Request $request, Rating $rating): JsonResponse
