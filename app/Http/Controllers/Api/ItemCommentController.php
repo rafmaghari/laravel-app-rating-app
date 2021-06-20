@@ -10,11 +10,10 @@ use Illuminate\Http\Request;
 
 class ItemCommentController extends Controller
 {
-
     public function store(): JsonResponse
     {
         $itemComment = Item::find(request()->item_id)->comments()->create(request()->all());
-        return response()->json(['message' => request()->all(), 'data' => $itemComment],201);
+        return response()->json(['message' => 'Comment has benn added.', 'data' => $itemComment],201);
     }
 
     public function update(Request $request, ItemComment $itemComment): JsonResponse
